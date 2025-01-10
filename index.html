@@ -245,7 +245,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%F0%9F%9A%80%F0%9F%9A%80%F0%9F%9A%80/" rel="tag">🚀🚀🚀</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
 
     </footer>
   </div>
@@ -314,7 +314,150 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/wow/" rel="tag">wow!</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-第五周学习周报"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2024/12/11/%E7%AC%AC%E4%BA%94%E5%91%A8%E5%AD%A6%E4%B9%A0%E5%91%A8%E6%8A%A5/"
+    >第五周学习周报</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2024/12/11/%E7%AC%AC%E4%BA%94%E5%91%A8%E5%AD%A6%E4%B9%A0%E5%91%A8%E6%8A%A5/" class="article-date">
+  <time datetime="2024-12-10T16:00:00.000Z" itemprop="datePublished">2024-12-11</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="神经网络（Neural-Network）"><a href="#神经网络（Neural-Network）" class="headerlink" title="神经网络（Neural Network）"></a>神经网络（Neural Network）</h1><h2 id="1-数据输入"><a href="#1-数据输入" class="headerlink" title="1.数据输入"></a>1.数据输入</h2><p>输入所有数据集的特征向量与标签。</p>
+<p>10次10折交叉验证，将数据集划分为训练集和测试集。</p>
+<h2 id="2-模型构建"><a href="#2-模型构建" class="headerlink" title="2.模型构建"></a>2.模型构建</h2><h3 id="初始化网络参数"><a href="#初始化网络参数" class="headerlink" title="初始化网络参数"></a>初始化网络参数</h3><ul>
+<li><p>输入层：大小为输入特征的维度数。</p>
+</li>
+<li><p>隐藏层：这个模型只有一层隐藏层，大小我设为定值<code>30</code>。</p>
+</li>
+<li><p>输出层：大小为标签种类数。</p>
+</li>
+</ul>
+<h3 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h3><h4 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h4><p>通过上一轮训练的参数计算各个输出层的结果。</p>
+<h5 id="输入层到隐藏层线性变换："><a href="#输入层到隐藏层线性变换：" class="headerlink" title="输入层到隐藏层线性变换："></a>输入层到隐藏层线性变换：</h5><p>$$<br>z_1&#x3D;XW_1+b_1<br>$$</p>
+<ul>
+<li>输入向量 X</li>
+<li>输入层到隐藏层的权重 W<sub>1</sub></li>
+<li>输入层到隐藏层偏置 b<sub>1</sub></li>
+</ul>
+<h5 id="隐藏层激活运算："><a href="#隐藏层激活运算：" class="headerlink" title="隐藏层激活运算："></a>隐藏层激活运算：</h5><p>$$<br>a _1&#x3D;ReLU(z_1)&#x3D;max(0,z_1)<br>$$</p>
+<h5 id="隐藏层到输出层的线性变换："><a href="#隐藏层到输出层的线性变换：" class="headerlink" title="隐藏层到输出层的线性变换："></a>隐藏层到输出层的线性变换：</h5><p>$$<br>z_2&#x3D;a_1W_2+b_2<br>$$</p>
+<ul>
+<li>隐藏层到输出层的权重W<sub>2</sub></li>
+<li>隐藏层到输出层的偏置 b<sub>2</sub></li>
+</ul>
+<h5 id="返回计算结果："><a href="#返回计算结果：" class="headerlink" title="返回计算结果："></a>返回计算结果：</h5><p>$$<br>a_2&#x3D;z_2<br>$$</p>
+<h4 id="损失计算"><a href="#损失计算" class="headerlink" title="损失计算"></a>损失计算</h4><p>用逻辑斯蒂回归中同样的交叉熵损失函数算出损失值。然而实际运算时只用进行<code>softmax</code>而不用算损失值，因为后面要对损失值求偏导数，这个过程可以被化简。</p>
+<h5 id="通过-Softmax-函数计算输出层的概率："><a href="#通过-Softmax-函数计算输出层的概率：" class="headerlink" title="通过 Softmax 函数计算输出层的概率："></a>通过 <code>Softmax</code> 函数计算输出层的概率：</h5><p>$$<br>p_{i,c}&#x3D;\frac{e^{a_{i,c}}}{\sum_{j&#x3D;1}^C{e^{a_{i,j}}}}<br>$$</p>
+<ul>
+<li>p<sub>i,c </sub>是指样本 i 对应类别 c 的预测结果</li>
+<li>C 是总类别数</li>
+<li>a<sub>i,c</sub> 是</li>
+</ul>
+<h5 id="通过交叉熵损失函数算出损失值："><a href="#通过交叉熵损失函数算出损失值：" class="headerlink" title="通过交叉熵损失函数算出损失值："></a>通过交叉熵损失函数算出损失值：</h5><p>$$<br>L&#x3D;-\frac{1}{m}\sum_{i&#x3D;1}^m\sum_{c&#x3D;1}^C y_{i,c}⋅\ln(p_{i,c})<br>$$</p>
+<ul>
+<li><p>m 是样本总数</p>
+</li>
+<li><p>C 是类别总数</p>
+</li>
+<li><p>y<sub>i,c</sub> 是指样本 i 对应类别 c 的真实标签</p>
+<p>满足如果样本 i 属于类别 c，那么 y<sub>i,c</sub> &#x3D; 1，否则 y<sub>i,c</sub> &#x3D; 0</p>
+</li>
+</ul>
+<h4 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h4><h5 id="输出层参数梯度计算："><a href="#输出层参数梯度计算：" class="headerlink" title="输出层参数梯度计算："></a>输出层参数梯度计算：</h5><ul>
+<li>基础公式</li>
+</ul>
+<p>$$<br>\frac{∂L}{∂z_2}&#x3D; p-y<br>$$</p>
+<ul>
+<li>W<sub>2 </sub>的梯度</li>
+</ul>
+<p>$$<br>\frac{∂L}{∂W_2}&#x3D; \frac{∂L}{∂z_2}⋅\frac{∂{z_2}}{∂W_2}&#x3D;(p−y)⋅a_1^T<br>$$</p>
+<ul>
+<li>b<sub>2</sub> 的梯度</li>
+</ul>
+<p>$$<br>\frac{∂L}{∂b_2}&#x3D; \frac{∂L}{∂z_2}⋅\frac{∂{z_2}}{∂b_2}&#x3D;p−y<br>$$</p>
+<h5 id="隐藏层参数梯度计算："><a href="#隐藏层参数梯度计算：" class="headerlink" title="隐藏层参数梯度计算："></a>隐藏层参数梯度计算：</h5><ul>
+<li>基础公式</li>
+</ul>
+<p>$$<br>\frac{∂L}{∂z_1}&#x3D;\frac{∂L}{∂a_1}⋅\frac{∂{a_1}}{∂z_1}&#x3D;\frac{∂L}{∂z_2}⋅\frac{∂{z_2}}{∂a_1}⋅\frac{∂{a_1}}{∂z_1}&#x3D;(p−y)⋅W_2^T⋅ReLu’(z_1)<br>$$</p>
+<ul>
+<li><p>W<sub>1 </sub>的梯度<br>$$<br>\frac{∂L}{∂W_1}&#x3D;\frac{∂L}{∂z_1}⋅\frac{∂{z_1}}{∂W_1}&#x3D;(p−y)⋅W_2^T⋅ReLu’(z_1)⋅X^T<br>$$</p>
+</li>
+<li><p>b<sub>1 </sub>的梯度<br>$$<br>\frac{∂L}{∂b_1}&#x3D;\frac{∂L}{∂z_1}⋅\frac{∂{z_1}}{∂b_1}&#x3D;(p−y)⋅W_2^T⋅ReLu’(z_1)<br>$$</p>
+</li>
+</ul>
+<h4 id="更新参数"><a href="#更新参数" class="headerlink" title="更新参数"></a>更新参数</h4><p>$$<br>W_1&#x3D;W_1−η\frac{∂L}{∂W_1}<br>$$</p>
+<p>$$<br>b_1&#x3D;b_1−η\frac{∂L}{∂b_1}<br>$$</p>
+<p>$$<br>W_2&#x3D;W_2−η\frac{∂L}{∂W_2}<br>$$</p>
+<p>$$<br>b_2&#x3D;b_2−η\frac{∂L}{∂b_2}<br>$$</p>
+<ul>
+<li>η 为学习率</li>
+</ul>
+<h3 id="模型运行"><a href="#模型运行" class="headerlink" title="模型运行"></a>模型运行</h3><h2 id="3-代码复现"><a href="#3-代码复现" class="headerlink" title="3.代码复现"></a>3.代码复现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据读取函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_excel</span>(<span class="params">location</span>):</span><br><span class="line">    df = pd.read_excel(location)</span><br><span class="line">    vector = df.iloc[:, :-<span class="number">1</span>].values  <span class="comment"># 特征向量</span></span><br><span class="line">    label = df.iloc[:, -<span class="number">1</span>].values  <span class="comment"># 标签</span></span><br><span class="line">    <span class="keyword">return</span> vector, label</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">preprocess_data</span>(<span class="params">vector</span>):</span><br><span class="line">    integer_mask = np.<span class="built_in">all</span>(vector == vector.astype(<span class="built_in">int</span>), axis=<span class="number">0</span>)</span><br><span class="line">    float_mask = ~integer_mask</span><br><span class="line">    <span class="comment"># 独热编码离散特征</span></span><br><span class="line">    integer_features = vector[:, integer_mask]</span><br><span class="line">    <span class="keyword">if</span> integer_features.size &gt; <span class="number">0</span>:</span><br><span class="line">        encoder = OneHotEncoder(sparse_output=<span class="literal">False</span>)</span><br><span class="line">        integer_features_encoded = encoder.fit_transform(integer_features)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        integer_features_encoded = np.empty((vector.shape[<span class="number">0</span>], <span class="number">0</span>))</span><br><span class="line">    <span class="comment"># 标准化和归一化连续特征</span></span><br><span class="line">    float_features = vector[:, float_mask]</span><br><span class="line">    <span class="keyword">if</span> float_features.size &gt; <span class="number">0</span>:</span><br><span class="line">        means = np.mean(float_features, axis=<span class="number">0</span>)</span><br><span class="line">        stds = np.std(float_features, axis=<span class="number">0</span>)</span><br><span class="line">        stds[stds == <span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        standardized_features = (float_features - means) / stds</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        standardized_features = np.empty((vector.shape[<span class="number">0</span>], <span class="number">0</span>))</span><br><span class="line">    processed_vector = np.hstack([integer_features_encoded, standardized_features])</span><br><span class="line">    <span class="keyword">return</span> processed_vector</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据集划分函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dataset_division</span>(<span class="params">vector, label, num, c</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(label)</span><br><span class="line">    train_vector, train_label = [], []</span><br><span class="line">    val_vector, val_label = [], []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">if</span> i % num != c:</span><br><span class="line">            train_vector.append(vector[i])</span><br><span class="line">            train_label.append(label[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            val_vector.append(vector[i])</span><br><span class="line">            val_label.append(label[i])</span><br><span class="line">    <span class="keyword">return</span> np.array(train_vector), np.array(val_vector), np.array(train_label), np.array(val_label)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NeuralNetwork</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, input_size, hidden_size, output_size, learning_rate=<span class="number">0.01</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.input_size = input_size</span><br><span class="line">        <span class="variable language_">self</span>.hidden_size = hidden_size</span><br><span class="line">        <span class="variable language_">self</span>.output_size = output_size</span><br><span class="line">        <span class="variable language_">self</span>.learning_rate = learning_rate</span><br><span class="line">        <span class="comment"># 输入层参数与偏置</span></span><br><span class="line">        <span class="variable language_">self</span>.W1 = np.random.randn(<span class="variable language_">self</span>.input_size, <span class="variable language_">self</span>.hidden_size)</span><br><span class="line">        <span class="variable language_">self</span>.b1 = np.zeros((<span class="number">1</span>, <span class="variable language_">self</span>.hidden_size))</span><br><span class="line">        <span class="comment"># 隐藏层参数与偏置</span></span><br><span class="line">        <span class="variable language_">self</span>.W2 = np.random.randn(<span class="variable language_">self</span>.hidden_size, <span class="variable language_">self</span>.output_size)</span><br><span class="line">        <span class="variable language_">self</span>.b2 = np.zeros((<span class="number">1</span>, <span class="variable language_">self</span>.output_size))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">softmax</span>(<span class="params">self, x</span>):</span><br><span class="line">        exp_x = np.exp(x - np.<span class="built_in">max</span>(x, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>))</span><br><span class="line">        <span class="keyword">return</span> exp_x / np.<span class="built_in">sum</span>(exp_x, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, X</span>):</span><br><span class="line">        <span class="variable language_">self</span>.z1 = np.dot(X, <span class="variable language_">self</span>.W1) + <span class="variable language_">self</span>.b1</span><br><span class="line">        <span class="comment"># 隐藏层输出 a1</span></span><br><span class="line">        <span class="variable language_">self</span>.a1 = np.maximum(<span class="number">0</span>, <span class="variable language_">self</span>.z1)</span><br><span class="line">        <span class="variable language_">self</span>.z2 = np.dot(<span class="variable language_">self</span>.a1, <span class="variable language_">self</span>.W2) + <span class="variable language_">self</span>.b2</span><br><span class="line">        <span class="comment"># 输出层输出 a2</span></span><br><span class="line">        <span class="variable language_">self</span>.a2 = <span class="variable language_">self</span>.z2</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.z2</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">backward</span>(<span class="params">self, X, y, p</span>):</span><br><span class="line">        <span class="comment"># 两个基础梯度</span></span><br><span class="line">        m = y.shape[<span class="number">0</span>]</span><br><span class="line">        grad_z2 = <span class="variable language_">self</span>.softmax(p)</span><br><span class="line">        grad_z2[<span class="built_in">range</span>(m), y] -= <span class="number">1</span></span><br><span class="line">        grad_z2 /= m </span><br><span class="line">        grad_z1 = np.dot(grad_z2, <span class="variable language_">self</span>.W2.T) * np.where(<span class="variable language_">self</span>.z1 &gt; <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="comment"># 更新参数</span></span><br><span class="line">        <span class="variable language_">self</span>.W2 -= <span class="variable language_">self</span>.learning_rate * np.dot(<span class="variable language_">self</span>.a1.T, grad_z2)</span><br><span class="line">        <span class="variable language_">self</span>.b2 -= <span class="variable language_">self</span>.learning_rate * np.<span class="built_in">sum</span>(grad_z2, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">        <span class="variable language_">self</span>.W1 -= <span class="variable language_">self</span>.learning_rate * np.dot(X.T, grad_z1)</span><br><span class="line">        <span class="variable language_">self</span>.b1 -= <span class="variable language_">self</span>.learning_rate * np.<span class="built_in">sum</span>(grad_z1, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">self, X, y, epochs=<span class="number">10000</span></span>):</span><br><span class="line">        <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">            p = <span class="variable language_">self</span>.forward(X)</span><br><span class="line">            <span class="variable language_">self</span>.backward(X, y, p)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self, X</span>):</span><br><span class="line">        y_pred = <span class="variable language_">self</span>.forward(X)</span><br><span class="line">        <span class="keyword">return</span> np.argmax(y_pred, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    base_path = Path(<span class="string">r&quot;E:\Document\MachineLearning\dataset&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> base_path.rglob(<span class="string">&#x27;*.xls&#x27;</span>):</span><br><span class="line">        <span class="keyword">if</span> item.is_file():</span><br><span class="line">            dataset_name = item.stem</span><br><span class="line">            vector, label = read_excel(item)</span><br><span class="line">            vector = preprocess_data(vector)</span><br><span class="line">            <span class="comment"># 确定类别数量</span></span><br><span class="line">            num_classes = <span class="built_in">len</span>(np.unique(label))</span><br><span class="line">            <span class="comment"># 转换标签为整数</span></span><br><span class="line">            label = label.astype(<span class="built_in">int</span>) - <span class="number">1</span></span><br><span class="line">            start = time.perf_counter()</span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            <span class="built_in">all</span> = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">                train_vector, val_vector, train_label, val_label = dataset_division(vector, label, num=<span class="number">10</span>, c=i)</span><br><span class="line">                <span class="comment"># 初始化神经网络</span></span><br><span class="line">                input_size = train_vector.shape[<span class="number">1</span>]</span><br><span class="line">                hidden_size = <span class="number">30</span>  <span class="comment"># 可以调整</span></span><br><span class="line">                model = NeuralNetwork(input_size, hidden_size, num_classes, learning_rate=<span class="number">0.01</span>)</span><br><span class="line">                model.train(train_vector, train_label, epochs=<span class="number">50000</span>)</span><br><span class="line">                predictions = model.predict(val_vector)</span><br><span class="line">                count += np.<span class="built_in">sum</span>(predictions == val_label)</span><br><span class="line">                <span class="built_in">all</span> += <span class="built_in">len</span>(val_label)</span><br><span class="line">                acc = np.<span class="built_in">sum</span>(predictions == val_label) / <span class="built_in">len</span>(val_label)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;Dataset <span class="subst">&#123;dataset_name&#125;</span>, fold <span class="subst">&#123;i+<span class="number">1</span>&#125;</span>, accuracy: <span class="subst">&#123;acc * <span class="number">100</span>:<span class="number">.3</span>f&#125;</span>%&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>()</span><br><span class="line">            accuracy = count / <span class="built_in">all</span></span><br><span class="line">            end = time.perf_counter()</span><br><span class="line">            execution_time = end - start</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Dataset <span class="subst">&#123;dataset_name&#125;</span>, average accuracy: <span class="subst">&#123;accuracy * <span class="number">100</span>:<span class="number">.3</span>f&#125;</span>%&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Execution Time: <span class="subst">&#123;execution_time:<span class="number">.4</span>f&#125;</span> seconds\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-运行结果"><a href="#4-运行结果" class="headerlink" title="4.运行结果"></a>4.运行结果</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">epoch = <span class="number">100000</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">hidden_size = <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>Dataset <strong><code>bal</code></strong>, fold 1, accuracy: 100.000%<br>Dataset <strong><code>bal</code></strong>, fold 2, accuracy: 93.651%<br>Dataset <strong><code>bal</code></strong>, fold 3, accuracy: 95.238%<br>Dataset <strong><code>bal</code></strong>, fold 4, accuracy: 100.000%<br>Dataset <strong><code>bal</code></strong>, fold 5, accuracy: 88.710%<br>Dataset <strong><code>bal</code></strong>, fold 6, accuracy: 88.710%<br>Dataset <strong><code>bal</code></strong>, fold 7, accuracy: 91.935%<br>Dataset <strong><code>bal</code></strong>, fold 8, accuracy: 95.161%<br>Dataset <strong><code>bal</code></strong>, fold 9, accuracy: 96.774%<br>Dataset <strong><code>bal</code></strong>, fold 10, accuracy: 95.161%</p>
+<p>Dataset <strong><code>bal</code></strong>, average accuracy: 94.551%<br>Execution Time: 571.1308 seconds</p>
+<p>Dataset <strong><code>gla</code></strong>, fold 1, accuracy: 63.636%<br>Dataset <strong><code>gla</code></strong>, fold 2, accuracy: 68.182%<br>Dataset <strong><code>gla</code></strong>, fold 3, accuracy: 77.273%<br>Dataset <strong><code>gla</code></strong>, fold 4, accuracy: 66.667%<br>Dataset <strong><code>gla</code></strong>, fold 5, accuracy: 52.381%<br>Dataset <strong><code>gla</code></strong>, fold 6, accuracy: 57.143%<br>Dataset <strong><code>gla</code></strong>, fold 7, accuracy: 71.429%<br>Dataset <strong><code>gla</code></strong>, fold 8, accuracy: 76.190%<br>Dataset <strong><code>gla</code></strong>, fold 9, accuracy: 76.190%<br>Dataset <strong><code>gla</code></strong>, fold 10, accuracy: 76.190%</p>
+<p>Dataset <strong><code>gla</code></strong>, average accuracy: 68.545%<br>Execution Time: 107.4957 seconds</p>
+<p>Dataset <strong><code>hay</code></strong>, fold 1, accuracy: 81.250%<br>Dataset <strong><code>hay</code></strong>, fold 2, accuracy: 75.000%<br>Dataset <strong><code>hay</code></strong>, fold 3, accuracy: 93.750%<br>Dataset <strong><code>hay</code></strong>, fold 4, accuracy: 81.250%<br>Dataset <strong><code>hay</code></strong>, fold 5, accuracy: 81.250%<br>Dataset <strong><code>hay</code></strong>, fold 6, accuracy: 68.750%<br>Dataset <strong><code>hay</code></strong>, fold 7, accuracy: 81.250%<br>Dataset <strong><code>hay</code></strong>, fold 8, accuracy: 87.500%<br>Dataset <strong><code>hay</code></strong>, fold 9, accuracy: 81.250%<br>Dataset <strong><code>hay</code></strong>, fold 10, accuracy: 80.000%</p>
+<p>Dataset <strong><code>hay</code></strong>, average accuracy: 81.132%<br>Execution Time: 91.5162 seconds</p>
+<p>Dataset <strong><code>iri</code></strong>, fold 1, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, fold 2, accuracy: 100.000%<br>Dataset <strong><code>iri</code></strong>, fold 3, accuracy: 86.667%<br>Dataset <strong><code>iri</code></strong>, fold 4, accuracy: 100.000%<br>Dataset <strong><code>iri</code></strong>, fold 5, accuracy: 100.000%<br>Dataset <strong><code>iri</code></strong>, fold 6, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, fold 7, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, fold 8, accuracy: 100.000%<br>Dataset <strong><code>iri</code></strong>, fold 9, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, fold 10, accuracy: 92.857%</p>
+<p>Dataset <strong><code>iri</code></strong>, average accuracy: 95.302%<br>Execution Time: 76.4697 seconds</p>
+<p>Dataset <strong><code>new</code></strong>, fold 1, accuracy: 90.909%<br>Dataset <strong><code>new</code></strong>, fold 2, accuracy: 77.273%<br>Dataset <strong><code>new</code></strong>, fold 3, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, fold 4, accuracy: 95.455%<br>Dataset <strong><code>new</code></strong>, fold 5, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, fold 6, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, fold 7, accuracy: 90.476%<br>Dataset <strong><code>new</code></strong>, fold 8, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, fold 9, accuracy: 90.476%<br>Dataset <strong><code>new</code></strong>, fold 10, accuracy: 90.476%</p>
+<p>Dataset <strong><code>new</code></strong>, average accuracy: 93.458%<br>Execution Time: 467.0869 seconds</p>
+<p>Dataset <strong><code>win</code></strong>, fold 1, accuracy: 77.778%<br>Dataset <strong><code>win</code></strong>, fold 2, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, fold 3, accuracy: 83.333%<br>Dataset <strong><code>win</code></strong>, fold 4, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, fold 5, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, fold 6, accuracy: 88.889%<br>Dataset <strong><code>win</code></strong>, fold 7, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, fold 8, accuracy: 82.353%<br>Dataset <strong><code>win</code></strong>, fold 9, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, fold 10, accuracy: 94.118%</p>
+<p>Dataset <strong><code>win</code></strong>, average accuracy: 92.655%<br>Execution Time: 745.7109 seconds</p>
+<p>Dataset <strong><code>zoo</code></strong>, fold 1, accuracy: 80.000%<br>Dataset <strong><code>zoo</code></strong>, fold 2, accuracy: 90.000%<br>Dataset <strong><code>zoo</code></strong>, fold 3, accuracy: 80.000%<br>Dataset <strong><code>zoo</code></strong>, fold 4, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, fold 5, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, fold 6, accuracy: 80.000%<br>Dataset <strong><code>zoo</code></strong>, fold 7, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, fold 8, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, fold 9, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, fold 10, accuracy: 90.000%</p>
+<p>Dataset <strong><code>zoo</code></strong>, average accuracy: 92.000%<br>Execution Time: 84.0655 seconds</p>
+</blockquote>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
 
     </footer>
   </div>
@@ -402,7 +545,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/wow/" rel="tag">wow!</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
 
     </footer>
   </div>
@@ -530,7 +673,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/wow/" rel="tag">wow!</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
 
     </footer>
   </div>

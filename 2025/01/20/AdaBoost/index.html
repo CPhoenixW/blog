@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>AdaBoost 算法（Adaptive Boosting） |  Phoenix W</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="./favicon.ico" />
+       
+<link rel="stylesheet" href="/blog/dist/main.css">
+
+      
+<link rel="stylesheet" href="/blog/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/blog/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-AdaBoost"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  AdaBoost 算法（Adaptive Boosting）
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2025/01/20/AdaBoost/" class="article-date">
+  <time datetime="2025-01-19T16:00:00.000Z" itemprop="datePublished">2025-01-20</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">7 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="AdaBoost-算法（Adaptive-Boosting）"><a href="#AdaBoost-算法（Adaptive-Boosting）" class="headerlink" title="AdaBoost 算法（Adaptive Boosting）"></a>AdaBoost 算法（Adaptive Boosting）</h1><h2 id="1-数据输入"><a href="#1-数据输入" class="headerlink" title="1.数据输入"></a>1.数据输入</h2><p>输入所有数据集的特征向量与标签。</p>
+<p>10次10折交叉验证，将数据集划分为训练集、测试集。</p>
+<h2 id="2-模型训练"><a href="#2-模型训练" class="headerlink" title="2.模型训练"></a>2.模型训练</h2><h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>对每一个训练集进行有放回的10次随机采样。</p>
+<p>初始化每组样本权重为$$\frac{1}{N}$$</p>
+<ul>
+<li>$$N$$为抽取样本数量</li>
+</ul>
+<h3 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h3><h4 id="构建决策树"><a href="#构建决策树" class="headerlink" title="构建决策树"></a>构建决策树</h4><p>直接调用 <code>decisionTreeCART.py</code> 中之前写的函数。</p>
+<h4 id="寻找错误点"><a href="#寻找错误点" class="headerlink" title="寻找错误点"></a>寻找错误点</h4><p>用训练集跑一遍刚刚构建的决策树模型。</p>
+<h4 id="计算加权错误率"><a href="#计算加权错误率" class="headerlink" title="计算加权错误率"></a>计算加权错误率</h4><p>$$<br>\epsilon&#x3D;\frac{\sum_{i&#x3D;1}^N{w_i⋅\epsilon_i}}{\sum_{i&#x3D;1}^N{w_i}}<br>$$</p>
+<ul>
+<li>$$ \epsilon_i$$  若为错误点取 1，若非错误点取 0</li>
+<li>$$ w_i $$ 为样本权重</li>
+<li>$$ N $$ 为样本总数</li>
+</ul>
+<h4 id="计算模型的权重"><a href="#计算模型的权重" class="headerlink" title="计算模型的权重"></a>计算模型的权重</h4><p>$$<br>\alpha&#x3D;\frac{1}{2}⋅\ln({\frac{1-\epsilon}{\max(\epsilon,10^{-6})}})<br>$$</p>
+<h4 id="更新样本权重"><a href="#更新样本权重" class="headerlink" title="更新样本权重"></a>更新样本权重</h4><p>$$<br>w_i&#x3D;w_i⋅e^{-\alpha⋅\epsilon_i}<br>$$</p>
+<h4 id="归一化样本权重"><a href="#归一化样本权重" class="headerlink" title="归一化样本权重"></a>归一化样本权重</h4><p>$$<br>w_i &#x3D; \frac{w_i}{\sum_{j&#x3D;1}^{N}{w_j}}<br>$$</p>
+<h3 id="结果预测"><a href="#结果预测" class="headerlink" title="结果预测"></a>结果预测</h3><h4 id="计算加权得分矩阵"><a href="#计算加权得分矩阵" class="headerlink" title="计算加权得分矩阵"></a>计算加权得分矩阵</h4><p>$$<br>S_{i,c} &#x3D; \sum_{t&#x3D;1}^T{\alpha_t⋅p_t^{(c)}(x_i)}<br>$$</p>
+<ul>
+<li>$$ p_t^{(c)}(x_i) $$ 为在第$$t$$个模型中，验证集中的第$$ i $$组特征对于标签$$c$$的得分</li>
+<li>$$T$$ 为模型数量</li>
+</ul>
+<h4 id="判定预测结果"><a href="#判定预测结果" class="headerlink" title="判定预测结果"></a>判定预测结果</h4><p>$$<br>\hat{y_i}&#x3D;arg\max S_{i,c}<br>$$</p>
+<h2 id="3-代码复现"><a href="#3-代码复现" class="headerlink" title="3.代码复现"></a>3.代码复现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> decisionTree.decisionTreeCART <span class="keyword">as</span> cart</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># AdaBoost 实现</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">adaboost</span>(<span class="params">vector, label, n=<span class="number">10</span>, epsilon=<span class="number">0.9</span></span>):</span><br><span class="line">    n_samples = <span class="built_in">len</span>(label)</span><br><span class="line">    weights = np.ones(n_samples) / n_samples</span><br><span class="line">    trees = []</span><br><span class="line">    alphas = []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="comment"># 有权重的随机抽取</span></span><br><span class="line">        indices = np.random.choice(np.arange(n_samples), size=n_samples, p=weights)</span><br><span class="line">        sample_vector, sample_label = vector[indices], label[indices]</span><br><span class="line">        tree = cart.build_tree(sample_vector, sample_label, epsilon)</span><br><span class="line">        trees.append(tree)</span><br><span class="line">        predictions = np.array([cart.search_tree(tree, x) <span class="keyword">for</span> x <span class="keyword">in</span> vector])</span><br><span class="line">        <span class="comment"># 寻找错误点，转化为0，1</span></span><br><span class="line">        errors = (predictions != label).astype(<span class="built_in">int</span>)</span><br><span class="line">        <span class="comment"># 计算加权错误率</span></span><br><span class="line">        weighted_error = np.dot(weights, errors) / np.<span class="built_in">sum</span>(weights)</span><br><span class="line">        <span class="keyword">if</span> weighted_error &gt; <span class="number">0.5</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        alpha = <span class="number">0.5</span> * np.log((<span class="number">1</span> - weighted_error) / <span class="built_in">max</span>(weighted_error, <span class="number">1e-6</span>))</span><br><span class="line">        alphas.append(alpha)</span><br><span class="line">        weights *= np.exp(-alpha * errors) / np.<span class="built_in">sum</span>(weights)</span><br><span class="line">    <span class="keyword">return</span> trees, alphas</span><br><span class="line"></span><br><span class="line"><span class="comment"># AdaBoost 预测</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">trees, alphas, val_vector</span>):</span><br><span class="line">    c = <span class="built_in">len</span>(np.unique(label)) + <span class="number">1</span></span><br><span class="line">    n = <span class="built_in">len</span>(val_vector)</span><br><span class="line">    scores = np.zeros((n, c))</span><br><span class="line">    <span class="keyword">for</span> alpha, tree <span class="keyword">in</span> <span class="built_in">zip</span>(alphas,trees):</span><br><span class="line">        p = np.array([cart.search_tree(tree,value) <span class="keyword">for</span> value <span class="keyword">in</span> val_vector])</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            scores[i, p[i]] += alpha</span><br><span class="line">    <span class="keyword">return</span> np.argmax(scores, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    base_path = Path(<span class="string">r&quot;E:\Document\MachineLearning\dataset&quot;</span>)</span><br><span class="line">    result = []</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> base_path.rglob(<span class="string">&#x27;*.xls&#x27;</span>):</span><br><span class="line">        <span class="keyword">if</span> item.is_file():</span><br><span class="line">            result.append(<span class="built_in">str</span>(item))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">dir</span> <span class="keyword">in</span> result:</span><br><span class="line">        vector, label = cart.read_excel(<span class="built_in">dir</span>)</span><br><span class="line">        start = time.perf_counter()</span><br><span class="line">        count, <span class="built_in">all</span> = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">            train_vector, train_label, val_vector, val_label = cart.division(vector, label, <span class="number">10</span>, i)</span><br><span class="line">            trees, alphas = adaboost(train_vector, train_label, n=<span class="number">1</span>, epsilon=<span class="number">0.9</span>)</span><br><span class="line">            predictions = predict(trees, alphas, val_vector)</span><br><span class="line">            acc = np.mean(predictions == val_label)</span><br><span class="line">            count += acc * <span class="built_in">len</span>(val_label)</span><br><span class="line">            <span class="built_in">all</span> += <span class="built_in">len</span>(val_label)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Dataset **`<span class="subst">&#123;<span class="built_in">dir</span>[-<span class="number">7</span>:-<span class="number">4</span>]&#125;</span>`**, epoch <span class="subst">&#123;i + <span class="number">1</span>&#125;</span>, accuracy: <span class="subst">&#123;acc * <span class="number">100</span>:<span class="number">.3</span>f&#125;</span>%&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Dataset **`<span class="subst">&#123;<span class="built_in">dir</span>[-<span class="number">7</span>:-<span class="number">4</span>]&#125;</span>`**, average accuracy: <span class="subst">&#123;count * <span class="number">100</span> / <span class="built_in">all</span>:<span class="number">.3</span>f&#125;</span>%&quot;</span>)</span><br><span class="line">        end = time.perf_counter()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Execution Time: <span class="subst">&#123;end - start:<span class="number">.4</span>f&#125;</span> seconds\n&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-运行结果"><a href="#4-运行结果" class="headerlink" title="4.运行结果"></a>4.运行结果</h2><blockquote>
+<p>Dataset <strong><code>bal</code></strong>, epoch 1, accuracy: 85.000%<br>Dataset <strong><code>bal</code></strong>, epoch 2, accuracy: 79.365%<br>Dataset <strong><code>bal</code></strong>, epoch 3, accuracy: 73.016%<br>Dataset <strong><code>bal</code></strong>, epoch 4, accuracy: 71.429%<br>Dataset <strong><code>bal</code></strong>, epoch 5, accuracy: 74.603%<br>Dataset <strong><code>bal</code></strong>, epoch 6, accuracy: 77.778%<br>Dataset <strong><code>bal</code></strong>, epoch 7, accuracy: 87.302%<br>Dataset <strong><code>bal</code></strong>, epoch 8, accuracy: 79.365%<br>Dataset <strong><code>bal</code></strong>, epoch 9, accuracy: 77.778%<br>Dataset <strong><code>bal</code></strong>, epoch 10, accuracy: 78.333%</p>
+<p>Dataset <strong><code>bal</code></strong>, average accuracy: 78.365%<br>Execution Time: 0.1762 seconds</p>
+<p>Dataset <strong><code>gla</code></strong>, epoch 1, accuracy: 76.471%<br>Dataset <strong><code>gla</code></strong>, epoch 2, accuracy: 69.565%<br>Dataset <strong><code>gla</code></strong>, epoch 3, accuracy: 52.174%<br>Dataset <strong><code>gla</code></strong>, epoch 4, accuracy: 78.261%<br>Dataset <strong><code>gla</code></strong>, epoch 5, accuracy: 81.818%<br>Dataset <strong><code>gla</code></strong>, epoch 6, accuracy: 50.000%<br>Dataset <strong><code>gla</code></strong>, epoch 7, accuracy: 63.636%<br>Dataset <strong><code>gla</code></strong>, epoch 8, accuracy: 52.381%<br>Dataset <strong><code>gla</code></strong>, epoch 9, accuracy: 70.000%<br>Dataset <strong><code>gla</code></strong>, epoch 10, accuracy: 70.000%</p>
+<p>Dataset <strong><code>gla</code></strong>, average accuracy: 66.197%<br>Execution Time: 0.9747 seconds</p>
+<p>Dataset <strong><code>hay</code></strong>, epoch 1, accuracy: 93.333%<br>Dataset <strong><code>hay</code></strong>, epoch 2, accuracy: 77.778%<br>Dataset <strong><code>hay</code></strong>, epoch 3, accuracy: 82.353%<br>Dataset <strong><code>hay</code></strong>, epoch 4, accuracy: 82.353%<br>Dataset <strong><code>hay</code></strong>, epoch 5, accuracy: 82.353%<br>Dataset <strong><code>hay</code></strong>, epoch 6, accuracy: 93.333%<br>Dataset <strong><code>hay</code></strong>, epoch 7, accuracy: 73.333%<br>Dataset <strong><code>hay</code></strong>, epoch 8, accuracy: 93.333%<br>Dataset <strong><code>hay</code></strong>, epoch 9, accuracy: 86.667%<br>Dataset <strong><code>hay</code></strong>, epoch 10, accuracy: 93.333%</p>
+<p>Dataset <strong><code>hay</code></strong>, average accuracy: 85.535%<br>Execution Time: 0.0445 seconds</p>
+<p>Dataset <strong><code>iri</code></strong>, epoch 1, accuracy: 92.857%<br>Dataset <strong><code>iri</code></strong>, epoch 2, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, epoch 3, accuracy: 100.000%<br>Dataset <strong><code>iri</code></strong>, epoch 4, accuracy: 86.667%<br>Dataset <strong><code>iri</code></strong>, epoch 5, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, epoch 6, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, epoch 7, accuracy: 100.000%<br>Dataset <strong><code>iri</code></strong>, epoch 8, accuracy: 86.667%<br>Dataset <strong><code>iri</code></strong>, epoch 9, accuracy: 93.333%<br>Dataset <strong><code>iri</code></strong>, epoch 10, accuracy: 100.000%</p>
+<p>Dataset <strong><code>iri</code></strong>, average accuracy: 93.960%<br>Execution Time: 0.0763 seconds</p>
+<p>Dataset <strong><code>new</code></strong>, epoch 1, accuracy: 90.000%<br>Dataset <strong><code>new</code></strong>, epoch 2, accuracy: 86.364%<br>Dataset <strong><code>new</code></strong>, epoch 3, accuracy: 90.909%<br>Dataset <strong><code>new</code></strong>, epoch 4, accuracy: 81.818%<br>Dataset <strong><code>new</code></strong>, epoch 5, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, epoch 6, accuracy: 95.455%<br>Dataset <strong><code>new</code></strong>, epoch 7, accuracy: 90.476%<br>Dataset <strong><code>new</code></strong>, epoch 8, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, epoch 9, accuracy: 100.000%<br>Dataset <strong><code>new</code></strong>, epoch 10, accuracy: 95.238%</p>
+<p>Dataset <strong><code>new</code></strong>, average accuracy: 92.991%<br>Execution Time: 0.2705 seconds</p>
+<p>Dataset <strong><code>win</code></strong>, epoch 1, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, epoch 2, accuracy: 94.737%<br>Dataset <strong><code>win</code></strong>, epoch 3, accuracy: 94.444%<br>Dataset <strong><code>win</code></strong>, epoch 4, accuracy: 77.778%<br>Dataset <strong><code>win</code></strong>, epoch 5, accuracy: 100.000%<br>Dataset <strong><code>win</code></strong>, epoch 6, accuracy: 88.889%<br>Dataset <strong><code>win</code></strong>, epoch 7, accuracy: 88.889%<br>Dataset <strong><code>win</code></strong>, epoch 8, accuracy: 94.444%<br>Dataset <strong><code>win</code></strong>, epoch 9, accuracy: 83.333%<br>Dataset <strong><code>win</code></strong>, epoch 10, accuracy: 87.500%</p>
+<p>Dataset <strong><code>win</code></strong>, average accuracy: 90.960%<br>Execution Time: 0.5513 seconds</p>
+<p>Dataset <strong><code>zoo</code></strong>, epoch 1, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, epoch 2, accuracy: 91.667%<br>Dataset <strong><code>zoo</code></strong>, epoch 3, accuracy: 91.667%<br>Dataset <strong><code>zoo</code></strong>, epoch 4, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, epoch 5, accuracy: 90.909%<br>Dataset <strong><code>zoo</code></strong>, epoch 6, accuracy: 90.000%<br>Dataset <strong><code>zoo</code></strong>, epoch 7, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, epoch 8, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, epoch 9, accuracy: 100.000%<br>Dataset <strong><code>zoo</code></strong>, epoch 10, accuracy: 100.000%</p>
+<p>Dataset <strong><code>zoo</code></strong>, average accuracy: 96.000%<br>Execution Time: 0.0368 seconds</p>
+</blockquote>
+<h2 id="5-复盘与分析"><a href="#5-复盘与分析" class="headerlink" title="5.复盘与分析"></a>5.复盘与分析</h2><p>这个模型的运行结果不像是其他模型，准确率会产生微小的变化。我怀疑可能是在调整权重值的时候由于是一些很小的浮点数计算，而产生了一些不确定性。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/blog/2025/01/17/Bagging/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Bagging 算法（Bootstrap Aggregating）</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024-2025
+        <i class="ri-heart-fill heart_icon"></i> Phoenix W
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/blog/"><img src="./images/ayer-side.svg" alt="Phoenix W"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/blog">主页</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/blog/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/blog/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/blog/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/blog/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/blog/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/blog/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/blog/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/blog/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

@@ -149,6 +149,200 @@
     
     
     <article
+  id="post-DBSCAN"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2025/02/08/DBSCAN/"
+    >DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2025/02/08/DBSCAN/" class="article-date">
+  <time datetime="2025-02-07T16:00:00.000Z" itemprop="datePublished">2025-02-08</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="1-数据输入">1.数据输入</h2>
+<p>输入所有数据集的特征向量与标签。</p>
+<p>10次10折交叉验证，将数据集划分为训练集和测试集。</p>
+<p>将所有数据标准化</p>
+<h2 id="2-算法实现">2.算法实现</h2>
+<h3 id="总体目标">总体目标</h3>
+<p>将数据按照核心点密度可达分成若干类别。</p>
+<h3 id="模型构建">模型构建</h3>
+<h4 id="1-选取质心">(1) 选取质心</h4>
+<p>随机选取第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 个未被标记的点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">μ_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 作为质心。</p>
+<h4 id="2-计算邻域数">(2) 计算邻域数</h4>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>i</mi><mo>∈</mo><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>d</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>μ</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mo>≤</mo><mi>ϵ</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">N(j)=\{i∈(0,n)|d(x_i,μ_j)≤\epsilon\}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mord">∣</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ϵ</span><span class="mclose">}</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>μ</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mo>=</mo><msup><mrow><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><msub><mi>μ</mi><mi>j</mi></msub><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi></mrow><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">d(x_i,μ_j)={||x_i-μ_j||}^2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.240116em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord">∣</span><span class="mord">∣</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord">∣</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.954008em;"><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 为样本总数</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>μ</mi><mi>j</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">d(x_i,μ_j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 为样本点与质心之间的欧氏距离</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">ϵ</span></span></span></span> 为邻域最大半径</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的特征</li>
+</ul>
+<h4 id="3-判断质心类型">(3) 判断质心类型</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">判定条件</th>
+<th style="text-align:left">质心类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mo>≥</mo><mi>M</mi><mi>i</mi><mi>n</mi><mi>P</mi><mi>t</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">N(j)≥MinPts</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">t</span><span class="mord mathdefault">s</span></span></span></span></td>
+<td style="text-align:left">核心点</td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mi>M</mi><mi>i</mi><mi>n</mi><mi>P</mi><mi>t</mi><mi>s</mi><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>μ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">N(j)&lt;MinPts\ , \ μ_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">t</span><span class="mord mathdefault">s</span><span class="mspace"> </span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为某核心点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 的邻域</td>
+<td style="text-align:left">边界点</td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mi>M</mi><mi>i</mi><mi>n</mi><mi>P</mi><mi>t</mi><mi>s</mi><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>μ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">N(j)&lt;MinPts\ , \ μ_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">t</span><span class="mord mathdefault">s</span><span class="mspace"> </span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 不为任一核心点的邻域</td>
+<td style="text-align:left">噪声点</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>$ MinPts $ 为核心点的最小邻居数</li>
+</ul>
+<h4 id="4-扩展簇">(4) 扩展簇</h4>
+<p>若 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">μ_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为核心点，则将其所有的邻域再次作为质心进行步骤2-4。</p>
+<p>若 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">μ_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为边界点， 则将其归类到簇 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 中。</p>
+<p>若 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">μ_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为噪声点， 则将其标记为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 。</p>
+<h3 id="结果预测">结果预测</h3>
+<p>计算测试集样本最近的簇，根据簇标签与真是标签对应关系预测标签。</p>
+<p>最后通过调整兰德指数(ARI)，判断模型的效果。</p>
+<h2 id="3-代码复现">3.代码复现</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> adjusted_rand_score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据读取函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_excel</span>(<span class="params">location</span>):</span><br><span class="line">    df = pd.read_excel(location)</span><br><span class="line">    vector = df.iloc[:, :-<span class="number">1</span>].values</span><br><span class="line">    label = df.iloc[:, -<span class="number">1</span>].values</span><br><span class="line">    <span class="keyword">return</span> vector, label</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理函数（标准化）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">preprocess_data</span>(<span class="params">vector</span>):</span><br><span class="line">    means = np.mean(vector, axis=<span class="number">0</span>)</span><br><span class="line">    stds = np.std(vector, axis=<span class="number">0</span>)</span><br><span class="line">    stds[stds == <span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    standardized = (vector - means) / stds</span><br><span class="line">    <span class="keyword">return</span> standardized</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据集划分函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">division</span>(<span class="params">vector, label, num, c</span>):</span><br><span class="line">    values, indices = np.unique(label, return_inverse=<span class="literal">True</span>)</span><br><span class="line">    train_vector, train_label, val_vector, val_label = [], [], [], []</span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> values:</span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(label)):</span><br><span class="line">            <span class="keyword">if</span> values[indices][i] == value:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> count % num == c:</span><br><span class="line">                    val_vector.append(vector[i])</span><br><span class="line">                    val_label.append(label[i])</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    train_vector.append(vector[i])</span><br><span class="line">                    train_label.append(label[i])</span><br><span class="line">    <span class="keyword">return</span> np.array(train_vector), np.array(val_vector), np.array(train_label), np.array(val_label)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义 DBSCAN 类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyDBSCAN</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, epsilon=<span class="number">0.5</span>, min_pts=<span class="number">5</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.epsilon = epsilon</span><br><span class="line">        <span class="variable language_">self</span>.min_pts = min_pts</span><br><span class="line">        <span class="variable language_">self</span>.labels_ = <span class="literal">None</span></span><br><span class="line">        <span class="variable language_">self</span>.core_sample_indices_ = []</span><br><span class="line">        <span class="variable language_">self</span>.core_samples_ = <span class="literal">None</span></span><br><span class="line">        <span class="variable language_">self</span>.is_core = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fit</span>(<span class="params">self, vector</span>):</span><br><span class="line">        n = vector.shape[<span class="number">0</span>]</span><br><span class="line">        <span class="variable language_">self</span>.labels_ = <span class="number">0</span> * np.ones(n, dtype=<span class="built_in">int</span>)</span><br><span class="line">        <span class="variable language_">self</span>.is_core = np.zeros(n, dtype=<span class="built_in">bool</span>)</span><br><span class="line">        cluster_id = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.labels_[i] == <span class="number">0</span>:</span><br><span class="line">                neighbors = <span class="variable language_">self</span>._region_query(vector, i)</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">len</span>(neighbors) &lt; <span class="variable language_">self</span>.min_pts:</span><br><span class="line">                    <span class="variable language_">self</span>.labels_[i] = -<span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="variable language_">self</span>.labels_[i] = cluster_id</span><br><span class="line">                    <span class="variable language_">self</span>._expand_cluster(vector, i, neighbors, cluster_id)</span><br><span class="line">                    cluster_id += <span class="number">1</span></span><br><span class="line">        <span class="variable language_">self</span>.core_sample_indices_ = np.where(<span class="variable language_">self</span>.is_core)[<span class="number">0</span>]</span><br><span class="line">        <span class="variable language_">self</span>.core_samples_ = vector[<span class="variable language_">self</span>.core_sample_indices_]</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_region_query</span>(<span class="params">self, vector, i</span>):</span><br><span class="line">        distances = np.linalg.norm(vector - vector[i], axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> np.where(distances &lt;= <span class="variable language_">self</span>.epsilon)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_expand_cluster</span>(<span class="params">self, vector, idx, neighbors, cluster_id</span>):</span><br><span class="line">        <span class="variable language_">self</span>.labels_[idx] = cluster_id</span><br><span class="line">        <span class="variable language_">self</span>.is_core[idx] = <span class="literal">True</span></span><br><span class="line">        seeds = <span class="built_in">list</span>(neighbors)</span><br><span class="line">        <span class="comment"># 递归扩展簇</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(seeds)):</span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.labels_[seeds[i]] == <span class="number">0</span>:</span><br><span class="line">                <span class="variable language_">self</span>.labels_[seeds[i]] = cluster_id</span><br><span class="line">                current_neighbors = <span class="variable language_">self</span>._region_query(vector, seeds[i])</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">len</span>(current_neighbors) &gt;= <span class="variable language_">self</span>.min_pts:</span><br><span class="line">                    <span class="variable language_">self</span>.is_core[seeds[i]] = <span class="literal">True</span></span><br><span class="line">                    <span class="keyword">for</span> pt <span class="keyword">in</span> current_neighbors:</span><br><span class="line">                        <span class="keyword">if</span> pt <span class="keyword">not</span> <span class="keyword">in</span> seeds:</span><br><span class="line">                            seeds.append(pt)</span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.labels_[seeds[i]] == -<span class="number">1</span>:</span><br><span class="line">                <span class="variable language_">self</span>.labels_[seeds[i]] = cluster_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self, X_new</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.core_samples_ <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> <span class="variable language_">self</span>.core_samples_.shape[<span class="number">0</span>] == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span> * np.ones(X_new.shape[<span class="number">0</span>], dtype=<span class="built_in">int</span>)</span><br><span class="line">        predictions = []</span><br><span class="line">        <span class="keyword">for</span> point <span class="keyword">in</span> X_new:</span><br><span class="line">            distances = np.linalg.norm(<span class="variable language_">self</span>.core_samples_ - point, axis=<span class="number">1</span>)</span><br><span class="line">            min_index = np.argmin(distances)</span><br><span class="line">            <span class="keyword">if</span> distances[min_index] &lt;= <span class="variable language_">self</span>.epsilon:</span><br><span class="line">                pred_label = <span class="variable language_">self</span>.labels_[<span class="variable language_">self</span>.core_sample_indices_[min_index]]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                pred_label = -<span class="number">1</span></span><br><span class="line">            predictions.append(pred_label)</span><br><span class="line">        <span class="keyword">return</span> np.array(predictions)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    base_path = Path(<span class="string">r&quot;E:\Document\MachineLearning\dataset&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> base_path.rglob(<span class="string">&#x27;bal.xls&#x27;</span>):</span><br><span class="line">        <span class="keyword">if</span> item.is_file():</span><br><span class="line">            dataset_name = item.stem</span><br><span class="line">            vector, label = read_excel(item)</span><br><span class="line">            vector = preprocess_data(vector)</span><br><span class="line">            num_classes = <span class="built_in">len</span>(np.unique(label))</span><br><span class="line">            start = time.perf_counter()</span><br><span class="line">            total_ari = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">                train_vector, val_vector, train_label, val_label = division(vector, label, num=<span class="number">10</span>, c=i)</span><br><span class="line">                model = MyDBSCAN(epsilon=<span class="number">3</span>, min_pts=<span class="number">30</span>)</span><br><span class="line">                model.fit(train_vector)</span><br><span class="line">                predictions = model.predict(val_vector)</span><br><span class="line">                ari = adjusted_rand_score(val_label, predictions)</span><br><span class="line">                total_ari += ari</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;Dataset **`<span class="subst">&#123;dataset_name&#125;</span>`**, epoch <span class="subst">&#123;i+<span class="number">1</span>&#125;</span>, ARI: <span class="subst">&#123;ari:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>()</span><br><span class="line">            avg_ari = total_ari / <span class="number">10</span></span><br><span class="line">            end = time.perf_counter()</span><br><span class="line">            execution_time = end - start</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Dataset **`<span class="subst">&#123;dataset_name&#125;</span>`**, Average ARI: <span class="subst">&#123;avg_ari:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Execution Time: <span class="subst">&#123;execution_time:<span class="number">.4</span>f&#125;</span> seconds\n&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="4-运行结果">4.运行结果</h2>
+<blockquote>
+<p>Dataset <strong><code>bal</code></strong>, epoch 1, ARI: -0.0329<br>
+Dataset <strong><code>bal</code></strong>, epoch 2, ARI: -0.0224<br>
+Dataset <strong><code>bal</code></strong>, epoch 3, ARI: -0.0395<br>
+Dataset <strong><code>bal</code></strong>, epoch 4, ARI: -0.0266<br>
+Dataset <strong><code>bal</code></strong>, epoch 5, ARI: -0.0168<br>
+Dataset <strong><code>bal</code></strong>, epoch 6, ARI: -0.0120<br>
+Dataset <strong><code>bal</code></strong>, epoch 7, ARI: -0.0309<br>
+Dataset <strong><code>bal</code></strong>, epoch 8, ARI: -0.0214<br>
+Dataset <strong><code>bal</code></strong>, epoch 9, ARI: 0.0368<br>
+Dataset <strong><code>bal</code></strong>, epoch 10, ARI: -0.0260</p>
+<p>Dataset <strong><code>bal</code></strong>, Average ARI: -0.0192<br>
+Execution Time: 3.1995 seconds</p>
+<p>Dataset <strong><code>gla</code></strong>, epoch 1, ARI: 0.2514<br>
+Dataset <strong><code>gla</code></strong>, epoch 2, ARI: 0.1844<br>
+Dataset <strong><code>gla</code></strong>, epoch 3, ARI: 0.0560<br>
+Dataset <strong><code>gla</code></strong>, epoch 4, ARI: 0.0465<br>
+Dataset <strong><code>gla</code></strong>, epoch 5, ARI: 0.0993<br>
+Dataset <strong><code>gla</code></strong>, epoch 6, ARI: 0.1704<br>
+Dataset <strong><code>gla</code></strong>, epoch 7, ARI: 0.0622<br>
+Dataset <strong><code>gla</code></strong>, epoch 8, ARI: 0.2734<br>
+Dataset <strong><code>gla</code></strong>, epoch 9, ARI: 0.2012<br>
+Dataset <strong><code>gla</code></strong>, epoch 10, ARI: 0.3307</p>
+<p>Dataset <strong><code>gla</code></strong>, Average ARI: 0.1676<br>
+Execution Time: 0.1055 seconds</p>
+<p>Dataset <strong><code>hay</code></strong>, epoch 1, ARI: 0.0719<br>
+Dataset <strong><code>hay</code></strong>, epoch 2, ARI: 0.2965<br>
+Dataset <strong><code>hay</code></strong>, epoch 3, ARI: 0.1461<br>
+Dataset <strong><code>hay</code></strong>, epoch 4, ARI: 0.1803<br>
+Dataset <strong><code>hay</code></strong>, epoch 5, ARI: 0.0884<br>
+Dataset <strong><code>hay</code></strong>, epoch 6, ARI: 0.0719<br>
+Dataset <strong><code>hay</code></strong>, epoch 7, ARI: 0.1362<br>
+Dataset <strong><code>hay</code></strong>, epoch 8, ARI: 0.0376<br>
+Dataset <strong><code>hay</code></strong>, epoch 9, ARI: 0.0376<br>
+Dataset <strong><code>hay</code></strong>, epoch 10, ARI: 0.0479</p>
+<p>Dataset <strong><code>hay</code></strong>, Average ARI: 0.1114<br>
+Execution Time: 0.0799 seconds</p>
+<p>Dataset <strong><code>iri</code></strong>, epoch 1, ARI: 0.5625<br>
+Dataset <strong><code>iri</code></strong>, epoch 2, ARI: 0.3922<br>
+Dataset <strong><code>iri</code></strong>, epoch 3, ARI: 0.4408<br>
+Dataset <strong><code>iri</code></strong>, epoch 4, ARI: 0.3922<br>
+Dataset <strong><code>iri</code></strong>, epoch 5, ARI: 0.4408<br>
+Dataset <strong><code>iri</code></strong>, epoch 6, ARI: 0.4408<br>
+Dataset <strong><code>iri</code></strong>, epoch 7, ARI: 0.3922<br>
+Dataset <strong><code>iri</code></strong>, epoch 8, ARI: 0.2353<br>
+Dataset <strong><code>iri</code></strong>, epoch 9, ARI: 0.3922<br>
+Dataset <strong><code>iri</code></strong>, epoch 10, ARI: 0.3922</p>
+<p>Dataset <strong><code>iri</code></strong>, Average ARI: 0.4081<br>
+Execution Time: 0.0639 seconds</p>
+<p>Dataset <strong><code>new</code></strong>, epoch 1, ARI: 0.4795<br>
+Dataset <strong><code>new</code></strong>, epoch 2, ARI: 0.5690<br>
+Dataset <strong><code>new</code></strong>, epoch 3, ARI: 0.4150<br>
+Dataset <strong><code>new</code></strong>, epoch 4, ARI: 0.2959<br>
+Dataset <strong><code>new</code></strong>, epoch 5, ARI: 0.5345<br>
+Dataset <strong><code>new</code></strong>, epoch 6, ARI: 0.7064<br>
+Dataset <strong><code>new</code></strong>, epoch 7, ARI: 0.5010<br>
+Dataset <strong><code>new</code></strong>, epoch 8, ARI: 0.4915<br>
+Dataset <strong><code>new</code></strong>, epoch 9, ARI: 0.3283<br>
+Dataset <strong><code>new</code></strong>, epoch 10, ARI: 0.5010</p>
+<p>Dataset <strong><code>new</code></strong>, Average ARI: 0.4822<br>
+Execution Time: 0.1849 seconds</p>
+<p>Dataset <strong><code>win</code></strong>, epoch 1, ARI: 0.2211<br>
+Dataset <strong><code>win</code></strong>, epoch 2, ARI: 0.5141<br>
+Dataset <strong><code>win</code></strong>, epoch 3, ARI: 0.6097<br>
+Dataset <strong><code>win</code></strong>, epoch 4, ARI: 0.1726<br>
+Dataset <strong><code>win</code></strong>, epoch 5, ARI: 0.5402<br>
+Dataset <strong><code>win</code></strong>, epoch 6, ARI: 0.4187<br>
+Dataset <strong><code>win</code></strong>, epoch 7, ARI: 0.5469<br>
+Dataset <strong><code>win</code></strong>, epoch 8, ARI: 0.4891<br>
+Dataset <strong><code>win</code></strong>, epoch 9, ARI: 0.4888<br>
+Dataset <strong><code>win</code></strong>, epoch 10, ARI: 0.5216</p>
+<p>Dataset <strong><code>win</code></strong>, Average ARI: 0.4523<br>
+Execution Time: 0.0270 seconds</p>
+<p>Dataset <strong><code>zoo</code></strong>, epoch 1, ARI: 0.6154<br>
+Dataset <strong><code>zoo</code></strong>, epoch 2, ARI: 0.2298<br>
+Dataset <strong><code>zoo</code></strong>, epoch 3, ARI: 0.2298<br>
+Dataset <strong><code>zoo</code></strong>, epoch 4, ARI: 0.0145<br>
+Dataset <strong><code>zoo</code></strong>, epoch 5, ARI: 0.0036<br>
+Dataset <strong><code>zoo</code></strong>, epoch 6, ARI: 0.0227<br>
+Dataset <strong><code>zoo</code></strong>, epoch 7, ARI: 0.0556<br>
+Dataset <strong><code>zoo</code></strong>, epoch 8, ARI: 0.4636<br>
+Dataset <strong><code>zoo</code></strong>, epoch 9, ARI: 0.4636<br>
+Dataset <strong><code>zoo</code></strong>, epoch 10, ARI: -0.1333</p>
+<p>Dataset <strong><code>zoo</code></strong>, Average ARI: 0.1965<br>
+Execution Time: 0.0123 seconds</p>
+</blockquote>
+<h2 id="5-复盘与分析">5.复盘与分析</h2>
+<p>不同的模型受到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">ϵ</span></span></span></span> 影响较大，我的目的只是单纯理解模型架构，所以没有对每个数据集进行针对性调参，使得模型的可靠性都不高。       <strong>DBSCAN算法</strong> 还有一个问题就是先标记的簇的元素数量会远多于后标记的簇，因为同为某簇边界点的元素会先被簇标签较小的簇标记。要改善这一问题，可以通过 <strong>HDBSCAN（Hierarchical DBSCAN）算法</strong> 来弥补这一缺陷。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-k-means"
   class="article article-type-post"
   itemscope
@@ -1334,59 +1528,14 @@ Execution Time: 87.3832 seconds</p>
 </article>
 
     
-    <article
-  id="post-hello-world"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/blog/2024/11/18/hello-world/"
-    >Hello World!</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/blog/2024/11/18/hello-world/" class="article-date">
-  <time datetime="2024-11-18T14:02:59.000Z" itemprop="datePublished">2024-11-18</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Welcome to PhoenixW’s blog! This is his first post.<br>刚刚在本地部署了一下博客，效果不错。<br>然而部署到github上的时候不知道为啥主题就加载不出来了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/testing/" rel="tag">testing!</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
   </article>
   
 
+  
+  <nav class="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="extend next" rel="next" href="/blog/page/2/">下一页</a>
+  </nav>
   
 </section>
 </div>

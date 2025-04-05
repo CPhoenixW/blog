@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>OLR vs MLR</title>
+      <link href="/blog/2025/04/05/OLR%20vs%20MLR/"/>
+      <url>/blog/2025/04/05/OLR%20vs%20MLR/</url>
+      
+        <content type="html"><![CDATA[<h1>有序逻辑回归与多项逻辑回归在有序数据集的表现</h1><p>有序逻辑回归（Ordinal Logistic Regression, OLR）</p><p>多项逻辑回归（Multinomial Logistic Regression, MLR）</p><h2 id="1-结果展示">1.结果展示</h2><table><thead><tr><th>Method</th><th>Average Acc</th><th>Average MSE</th><th>Average MAE</th></tr></thead><tbody><tr><td>ORL</td><td>66.835%</td><td>0.332</td><td>0.332</td></tr><tr><td>MRL</td><td>65.316%</td><td>1.0389</td><td>0.5028</td></tr></tbody></table><p><img src="https://github.com/CPhoenixW/blog/blob/gh-pages/images/OLR-MLR-1.png?raw=true" alt="MLR-ORL-1"></p><table><thead><tr><th>Method</th><th>Average Acc</th><th>Average MSE</th><th>Average MAE</th></tr></thead><tbody><tr><td>ORL</td><td>49.533%</td><td>0.874</td><td>0.620</td></tr><tr><td>MRL</td><td>49.161%</td><td>1.3525</td><td>0.7530</td></tr></tbody></table><p><img src="https://github.com/CPhoenixW/blog/blob/gh-pages/images/OLR-MLR-2.png?raw=true" alt="MLR-OLR-2"></p><h2 id="2-复盘与分析">2.复盘与分析</h2><p>一开始在 UCI Wine 数据集上有序逻辑回归的准确率较差，我思考的原因可能是：</p><ul><li><p>OLR 通过累积概率预测，倾向于拟合多数类边界。若少数类样本少，阈值更新不足，模型可能忽略稀疏类别，预测集中在多数类附近。</p></li><li><p>MLR 直接优化每个类别的概率，少数类有独立权重，受分布影响较小。</p></li></ul><p>然而 UCI Wine 数据集高分数据和低分数据极少标签类别也不多，难以通过将相邻标签归为同一类别的方式使类别较为平均。</p><p>后来我使用了 UCI Student-mat 和  UCI Abalone 数据集，它们标签种类较多，易通过将相邻标签归为同一类别的方式使类别较为平均。使得有序逻辑回归相对于多项逻辑回归有了较大提升。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AlexNet</title>
       <link href="/blog/2025/03/22/AlexNet/"/>
       <url>/blog/2025/03/22/AlexNet/</url>

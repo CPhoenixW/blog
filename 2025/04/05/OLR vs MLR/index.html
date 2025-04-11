@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">325</span>
+            <span class="post-count">634</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
@@ -108,6 +108,7 @@
 <p>有序逻辑回归（Ordinal Logistic Regression, OLR）</p>
 <p>多项逻辑回归（Multinomial Logistic Regression, MLR）</p>
 <h2 id="1-结果展示">1.结果展示</h2>
+<h4 id="uci-student-mat-dataset">UCI Student-mat Dataset</h4>
 <table>
 <thead>
 <tr>
@@ -133,6 +134,21 @@
 </tbody>
 </table>
 <p><img src="https://github.com/CPhoenixW/blog/blob/gh-pages/images/OLR-MLR-1.png?raw=true" alt="MLR-ORL-1"></p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>e</mi><mi>d</mi><mi>P</mi><mi>r</mi><mi>o</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">FedProx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">x</span></span></span></span> 五个参与方，每个参与方每轮训练20个epoch，总共训练100轮，正则化率0.5。</p>
+<p>最终效果比普通OLR好。</p>
+<blockquote>
+<p>Round 01/100, accuracy: 24.051%, MAE: 0.990, MSE: 1.476</p>
+<p>Round 10/100, accuracy: 65.316%, MAE: 0.352, MSE: 0.362</p>
+<p>Round 30/100, accuracy: 66.329%, MAE: 0.339, MSE: 0.344</p>
+<p>Round 50/100, accuracy: 67.089%, MAE: 0.329, MSE: 0.329</p>
+<p>Round 90/100, accuracy: 68.101%, MAE: 0.319, MSE: 0.319</p>
+<p>Round 100/100, accuracy: 67.595%, MAE: 0.324, MSE: 0.324</p>
+</blockquote>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>e</mi><mi>d</mi><mi>P</mi><mi>r</mi><mi>o</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">FedProx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">x</span></span></span></span> 五个参与方，每个参与方每轮训练100个epoch，总共训练120轮，正则化率0.5。</p>
+<blockquote>
+<p>Round 120/120, accuracy: 69.873%, MAE: 0.301, MSE: 0.301</p>
+</blockquote>
+<h4 id="uci-abalone-dataset">UCI Abalone Dataset</h4>
 <table>
 <thead>
 <tr>
@@ -158,6 +174,20 @@
 </tbody>
 </table>
 <p><img src="https://github.com/CPhoenixW/blog/blob/gh-pages/images/OLR-MLR-2.png?raw=true" alt="MLR-OLR-2"></p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>e</mi><mi>d</mi><mi>P</mi><mi>r</mi><mi>o</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">FedProx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">x</span></span></span></span> 五个参与方，每个参与方每轮训练20个epoch，总共训练100轮，正则化率0.5。</p>
+<p>最终效果比普通OLR差。</p>
+<blockquote>
+<p>Round 01/100, accuracy: 26.837%, MAE: 1.050, MSE: 1.686</p>
+<p>Round 10/100, accuracy: 26.574%, MAE: 0.878, MSE: 1.170</p>
+<p>Round 30/100, accuracy: 33.349%, MAE: 0.808, MSE: 1.107</p>
+<p>Round 50/100, accuracy: 36.749%, MAE: 0.766, MSE: 1.054</p>
+<p>Round 90/100, accuracy: 42.016%, MAE: 0.711, MSE: 1.005</p>
+<p>Round 100/100, accuracy: 42.758%, MAE: 0.702, MSE: 0.993</p>
+</blockquote>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>e</mi><mi>d</mi><mi>P</mi><mi>r</mi><mi>o</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">FedProx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">x</span></span></span></span> 五个参与方，每个参与方每轮训练100个epoch，总共训练100轮，正则化率0.5。</p>
+<blockquote>
+<p>Round 100/100, accuracy: 49.964%, MAE: 0.616, MSE: 0.874</p>
+</blockquote>
 <h2 id="2-复盘与分析">2.复盘与分析</h2>
 <p>一开始在 UCI Wine 数据集上有序逻辑回归的准确率较差，我思考的原因可能是：</p>
 <ul>
@@ -187,15 +217,6 @@
 
    
   <nav class="article-nav">
-    
-      <a href="/blog/2025/04/10/%E7%AE%80%E5%8E%86/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            个人简历
-          
-        </div>
-      </a>
     
     
       <a href="/blog/2025/03/22/AlexNet/" class="article-nav-link">
